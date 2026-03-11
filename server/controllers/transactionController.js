@@ -6,31 +6,49 @@ import {
 
 export const addTransaction = async (req, res) => {
   try {
+
     const transaction = await createTransaction({
-      ...req.body,
-      userId: req.user.id
+      title: req.body.title,
+      amount: req.body.amount,
+      user: req.user.id   // ✅ FIXED
     });
 
     res.json(transaction);
+
   } catch (error) {
-    res.status(500).json(error);
+
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+
   }
 };
 
 export const getTransactions = async (req, res) => {
   try {
+
     const transactions = await getTransactionsByUser(req.user.id);
+
     res.json(transactions);
+
   } catch (error) {
-    res.status(500).json(error);
+
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+
   }
 };
 
 export const removeTransaction = async (req, res) => {
   try {
+
     await deleteTransaction(req.params.id);
+
     res.json({ message: "Deleted" });
+
   } catch (error) {
-    res.status(500).json(error);
+
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+
   }
 };
