@@ -10,7 +10,9 @@ export const addTransaction = async (req, res) => {
     const transaction = await createTransaction({
       title: req.body.title,
       amount: req.body.amount,
-      user: req.user.id   // ✅ FIXED
+      category: req.body.category,   
+      date: req.body.date, 
+      user: req.user.id   
     });
 
     res.json(transaction);
