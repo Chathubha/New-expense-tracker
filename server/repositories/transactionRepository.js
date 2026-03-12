@@ -6,9 +6,17 @@ export const createTransaction = async (data) => {
 };
 
 export const getTransactionsByUser = async (userId) => {
-  return await Transaction.find({ user: userId }); // ✅ FIX
+  return await Transaction.find({ user: userId });
 };
 
 export const deleteTransaction = async (id) => {
   return await Transaction.findByIdAndDelete(id);
+};
+
+export const updateTransaction = async (id, data) => {
+  return await Transaction.findByIdAndUpdate(
+    id,
+    data,
+    { new: true }
+  );
 };

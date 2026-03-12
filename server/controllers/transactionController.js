@@ -1,7 +1,8 @@
 import {
   createTransaction,
   getTransactionsByUser,
-  deleteTransaction
+  deleteTransaction,
+  updateTransaction
 } from "../repositories/transactionRepository.js";
 
 export const addTransaction = async (req, res) => {
@@ -10,9 +11,9 @@ export const addTransaction = async (req, res) => {
     const transaction = await createTransaction({
       title: req.body.title,
       amount: req.body.amount,
-      category: req.body.category,   
-      date: req.body.date, 
-      user: req.user.id   
+      category: req.body.category,
+      date: req.body.date,
+      user: req.user.id
     });
 
     res.json(transaction);
@@ -53,4 +54,29 @@ export const removeTransaction = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
 
   }
+};
+
+export const editTransaction = async (req, res) => {
+
+  try {
+
+    const updated = await updateTransaction(
+      req.params.id,
+      {
+        title: req.body.title,
+        amount: req.body.amount,
+        category: req.body.category,
+        date: req.body.date
+      }
+    );
+
+    res.json(updated);
+
+  } catch (error) {
+
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+
+  }
+
 };
